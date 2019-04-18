@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.1)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+project( ball_tracking )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( ball_tracking source/ball_tracking.cpp )
+target_link_libraries( ball_tracking ${OpenCV_LIBS} )
