@@ -162,7 +162,7 @@ int main() {
 
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec) * 180 / PI;
-    double x = std::trunc(((regulator.calculateError(0, amplitude) * 180) / radius)/2) + 90;
+    int x = std::trunc(((regulator.calculateError(0, amplitude) * 180) / radius)/2) + 90;
 
     std::cout << x << std::endl;
 
