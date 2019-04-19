@@ -117,11 +117,11 @@ int main(){
     cv::Point2d diff = center_ball - center_board;
     cv::Vec2d ball_vec(diff);
 
-    double amplitude = sqrt(pow(2,ball_vec[0])+pow(2,ball_vec[1]));
+    double amplitude = sqrt(pow(ball_vec[0],2)+pow(ball_vec[1],2));
     double angle = std::atan(ball_vec[1]/ball_vec[0]) * 180/PI;
 
     std::cout << amplitude << " " << angle << std::endl;
-    
+
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
