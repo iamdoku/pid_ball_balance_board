@@ -34,6 +34,7 @@ private:
 
 double calculateAngle(const cv::Vec2d &v) {
   if (v[0] > 0 && v[1] > 0) {
+    std::cout << "I" << std::endl;
     return atan(v[1] / v[0]);
   } else if (v[0] < 0 && v[1] > 0) {
     return PI - atan(v[1] / (-1 * v[0]));
@@ -168,12 +169,12 @@ int main() {
 
     if (angle <= (2 / 3) * PI){
       a_level = x;
-      std::cout << "set a level" << std::endl;
+      //std::cout << "set a level" << std::endl;
     }
     else if (angle > (2 / 3) * PI && angle <= (4 / 3) * PI)
       b_level = x;
     else if (angle > (4 / 3) * PI && angle <= 2 * PI)
-        c_level = x;
+      c_level = x;
     
     std::stringstream ss_a, ss_b, ss_c;
     ss_a << "a" << a_level;
