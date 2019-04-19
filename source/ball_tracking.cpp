@@ -79,7 +79,7 @@ int main() {
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
   FilterHSV ball(0, 83, 177, 30, 255, 255);
-  FilterHSv board;
+  FilterHSV board;
 
   ball.calibrate(camera);
   board.calibrate(camera);
