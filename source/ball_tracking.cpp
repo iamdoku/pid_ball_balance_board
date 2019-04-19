@@ -61,7 +61,7 @@ public:
     return hsv_frame;
   }
 
-  cv::Point getCenter(cv::VideoCapture &vc){
+  cv::Point getCenter(){
     cv::Moments m = cv::moments(filter(), true);
     return cv::Point(m.m10 / m.m00, m.m01 / m.m00);
   }
@@ -92,7 +92,7 @@ int main(){
   ball.calibrate(camera);
   board.calibrate(camera);
 
-  cv::Point center_board = board.getCenter;
+  cv::Point center_board = board.getCenter();
 
   cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
