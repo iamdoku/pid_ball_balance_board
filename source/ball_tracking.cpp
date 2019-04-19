@@ -24,7 +24,7 @@ public:
     double prev_e = e;
     calculateError(w, y);
     ie += e * (1 / 30);
-    return (kp * e) + (ki * ie) + (kd * ((e - prev_e) / (1 / 30)));
+    return (kp * e) + (ki * ie) + (kd * ((e - prev_e) / (1.0 / 30.0)));
   }
 
 private:
@@ -134,7 +134,7 @@ int main() {
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
-  PID regulator(1, 0, 0);
+  PID regulator(1, 0.8, 0.6);
 
   double x;
 
@@ -163,7 +163,8 @@ int main() {
 
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec);
-    int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
+    //int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
+    int x = 180 - (std::trunc(((regulator.regulate(0, amplitude) * 90) / radius))+90);
 
     std::cout << x << std::endl;
 
