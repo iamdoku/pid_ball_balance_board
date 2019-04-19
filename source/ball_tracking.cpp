@@ -8,11 +8,11 @@
 
 class FilterHSV {
 public:
-  FilterHSV(std::ifstream &is) {
+  FilterHSV(std::ifstream &is, cv::VideoCapture &stream) : vc(stream) {
     is >> low_H >> low_S >> low_V >> high_H >> high_S >> high_V;
   }
-  FilterHSV(int lh, int ls, int lv, int hh, int hs, int hv)
-      : low_H(lh), low_S(ls), low_V(lv), high_H(hh), high_S(hs), high_V(hv) {}
+  FilterHSV(int lh, int ls, int lv, int hh, int hs, int hv, cv::VideoCapture &stream)
+      : low_H(lh), low_S(ls), low_V(lv), high_H(hh), high_S(hs), high_V(hv), vc(stream) {}
   FilterHSV() = default;
 
   cv::Scalar retLow() { return cv::Scalar(low_H, low_S, low_V); }
@@ -32,7 +32,7 @@ public:
       cv::createTrackbar("HighV", "Calibration", &high_V, 255);
 
       while (cv::waitKey(10) == -1) {
-        cv::imshow("Calibration", filter(vc));
+        cv::imshow("Calibration", filter());
       }
       cv::destroyAllWindows();
     } catch (std::runtime_error err) {
@@ -41,7 +41,7 @@ public:
     }
   }
 
-  cv::Mat filter(cv::VideoCapture &vc) {
+  cv::Mat filter() {
     try {
       if (!vc.isOpened())
         throw std::runtime_error("Camera isn't open");
@@ -61,7 +61,13 @@ public:
     return hsv_frame;
   }
 
+  cv::Point getCenter(cv::VideoCapture &vc){
+    cv::Moments m = cv::moments(filter(), true);
+    return cv::Point(m.m10 / m.m00, m.m01 / m.m00);
+  }
+
 private:
+  cv::VideoCapture &vc;
   int low_H = 0, high_H = 255;
   int low_S = 0, high_S = 255;
   int low_V = 0, high_V = 255;
@@ -80,11 +86,13 @@ int main(){
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
-  FilterHSV ball(0, 83, 177, 30, 255, 255);
-  FilterHSV board(0, 0, 130, 255, 255, 255);
+  FilterHSV ball(0, 83, 177, 30, 255, 255, camera);
+  FilterHSV board(0, 0, 130, 255, 255, 255, camera);
 
   ball.calibrate(camera);
   board.calibrate(camera);
+
+  cv::Point center_board = board.getCenter;
 
   cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
@@ -99,10 +107,8 @@ int main(){
 
 
     cv::Moments m_ball = cv::moments(frame_filtered_ball, true);
-    cv::Moments m_board = cv::moments(frame_filtered_board, true);
 
     cv::Point center_ball(m_ball.m10 / m_ball.m00, m_ball.m01 / m_ball.m00);
-    cv::Point center_board(m_board.m10 / m_board.m00, m_board.m01 / m_board.m00);
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
