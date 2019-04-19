@@ -16,7 +16,7 @@ public:
   PID(double p, double i, double d) : kp(p), ki(i), kd(d) {}
 
   double calculateError(const double &w, const double &y) {
-    e = w - y;
+    e = y - w;
     return e;
   }
 
