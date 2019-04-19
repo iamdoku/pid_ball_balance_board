@@ -85,7 +85,6 @@ public:
         throw std::runtime_error("Camera isn't open");
       cv::Mat frame, hsv_frame;
       vc >> frame;
-      cv::flip(frame, frame, 0);
       return filter(frame);
     } catch (std::runtime_error err) {
       std::cerr << "Please check your connection and/or software dependecies"
@@ -143,7 +142,6 @@ int main() {
     serialPuts(fd, "b90");
     serialPuts(fd, "c90");
     camera >> frame_bgr;
-    cv::flip(frame_bgr, frame_bgr, 0);
 
     frame_filtered_ball = ball.filter(frame_bgr);
     frame_filtered_board = board.filter(frame_bgr);
