@@ -99,7 +99,7 @@ int main(){
 
 
     cv::Moments m_ball = cv::moments(frame_filtered_ball, true);
-    cv::Moments m_board = cv::moments(frame_filtered_ball, true);
+    cv::Moments m_board = cv::moments(frame_filtered_board, true);
 
     cv::Point center_ball(m_ball.m10 / m_ball.m00, m_ball.m01 / m_ball.m00);
     cv::Point center_board(m_board.m10 / m_board.m00, m_board.m01 / m_board.m00);
