@@ -71,7 +71,7 @@ public:
 
   double getRadius(){
     cv::Moments m = cv::moments(filter(), true);
-    return sqrt(cv::contourArea(m.m00)/PI);
+    return sqrt(m.m00/PI);
   }
 
 private:
