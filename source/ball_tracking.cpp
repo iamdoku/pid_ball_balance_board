@@ -61,20 +61,28 @@ public:
   }
 
 private:
-  int low_H = 0, high_H = 30; // 21;
-  int low_S = 83, high_S = 255;
-  int low_V = 177, high_V = 255;
+  int low_H = 0, high_H = 255;
+  int low_S = 0, high_S = 255;
+  int low_V = 0, high_V = 255;
 };
 
 int main() {
   int fd = serialOpen("/dev/ttyUSB0", 9600);
   if (fd < 0)
     return -1;
+
+  serialPuts(fd, "a90");
+  serialPuts(fd, "b90");
+  erialPuts(fd, "c90");
   cv::VideoCapture camera(0);
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  FilterHSV ball;
+
+  FilterHSV ball(0, 83, 177, 30, 255, 255);
+  FilterHSv board;
+
   ball.calibrate(camera);
+  board.calibrate(camera);
   std::vector<cv::Vec3f> vec;
   cv::Mat frame_bgr, frame_filtered, threshold;
   while (cv::waitKey(1) == -1) {
