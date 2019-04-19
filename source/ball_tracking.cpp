@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
@@ -66,8 +67,9 @@ private:
   int low_V = 0, high_V = 255;
 };
 
-int main() {
-  int fd = serialOpen("/dev/ttyUSB0", 9600);
+
+int main(){
+    int fd = serialOpen("/dev/ttyUSB0", 9600);
   if (fd < 0)
     return -1;
 
@@ -79,36 +81,33 @@ int main() {
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
   FilterHSV ball(0, 83, 177, 30, 255, 255);
-  FilterHSV board;
+  FilterHSV board(0, 0, 130, 255, 255, 255);
 
   ball.calibrate(camera);
   board.calibrate(camera);
-  std::vector<cv::Vec3f> vec;
-  cv::Mat frame_bgr, frame_filtered, threshold;
+
+  cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
     serialPuts(fd, "a90");
     serialPuts(fd, "b90");
     serialPuts(fd, "c90");
     camera >> frame_bgr;
     cv::flip(frame_bgr, frame_bgr, 0);
-    frame_filtered = ball.filter(frame_bgr);
-    // cv::GaussianBlur(frame_filtered, frame_filtered, cv::Size(9, 9), 2, 2);
-    // cv::dilate(frame_filtered, frame_filtered, 0);
-    // cv::erode(frame_filtered, frame_filtered, 0);
-    // cv::threshold(frame_filtered, threshold, 100, 255, cv::THRESH_BINARY);
-    /*cv::HoughCircles(frame_filtered, vec, cv::HOUGH_GRADIENT, 4,
-            frame_filtered.rows / 1, 50, 35, 20, 50);
-    for (size_t i = 0; i != vec.size(); ++i) {
-            std::cout << "Loop" << std::endl;
-            int radius = cvCeil(vec[0][2]);
-            cv::Point center(vec[0][0], vec[0][1]);
-            cv::circle(frame_bgr, center, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
-            cv::circle(frame_bgr, center, radius, cv::Scalar(0, 0, 255), 3, 8,
-    0);
-    }*/
-    cv::Moments m = cv::moments(frame_filtered, true);
-    cv::Point p(m.m10 / m.m00, m.m01 / m.m00);
-    cv::circle(frame_bgr, p, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+
+    frame_filtered_ball = ball.filter(frame_bgr);
+    frame_filtered_board = ball.filter(frame_bgr);
+
+
+    cv::Moments m_ball = cv::moments(frame_filtered_ball, true);
+    cv::Moments m_board = cv::moments(frame_filtered_ball, true);
+
+    cv::Point center_ball(m_ball.m10 / m_ball.m00, m_ball.m01 / m_ball.m00);
+    cv::Point center_board(m_board.m10 / m_board.m00, m_board.m01 / m_board.m00);
+
+    cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
+    cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
+
     cv::imshow("Ball", frame_bgr);
   }
 }
