@@ -167,14 +167,14 @@ int main() {
 
     std::cout << x << std::endl;
 
-    if (angle <= (2 / 3) * PI){
+    if (angle <= (2.0 / 3.0) * PI){
       /*a_level = x;*/
       std::cout << angle << " I." << std::endl;
     }
-    else if (angle > (2 / 3) * PI && angle <= (4 / 3) * PI)
+    else if (angle > (2.0 / 3.0) * PI && angle <= (4.0 / 3.0) * PI)
       /*b_level = x;*/
       std::cout << angle << " II." << std::endl;
-    else if (angle > (4 / 3) * PI && angle <= 2 * PI)
+    else if (angle > (4.0 / 3.0) * PI && angle <= 2 * PI)
       /*c_level = x;*/
       std::cout << angle << " III." << std::endl;
 
