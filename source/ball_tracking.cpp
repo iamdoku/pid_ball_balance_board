@@ -33,20 +33,12 @@ private:
 
 double calculateAngle(const cv::Vec2d &v) {
   if (v[0] > 0 && v[1] > 0) {
-    std::cout << "I."
-              << " ";
     return atan(v[1] / v[0]);
   } else if (v[0] < 0 && v[1] > 0) {
-    std::cout << "II."
-              << " ";
     return PI - atan(v[1] / (-1 * v[0]));
   } else if (v[0] < 0 && v[1] < 0) {
-    std::cout << "III."
-              << " ";
     return PI + atan((-1 * v[1]) / (-1 * v[0]));
   } else if (v[0] > 0 && v[1] < 0) {
-    std::cout << "IV."
-              << " ";
     return 2 * PI - atan((-1 * v[1]) / v[0]);
   } else
     return 0;
@@ -169,11 +161,9 @@ int main() {
 
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec) * 180 / PI;
-
-    std::cout << (amplitude / radius) * 100 << " " << angle << std::endl;
     double x =
         180 - std::trunc((regulator.regulate(0, amplitude) * 180) / radius);
-
+    std::cout << x << std::endl;
     if (angle <= (2 / 3) * PI)
       a_level = x;
     else if (angle > (2 / 3) * PI && angle <= (4 / 3) * PI)
