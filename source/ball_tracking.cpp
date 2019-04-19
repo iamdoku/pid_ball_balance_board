@@ -24,7 +24,8 @@ public:
     double prev_e = e;
     calculateError(w, y);
     ie += e * (1.0 / 30.0);
-    return (kp * e); //+ (ki * ie) + (kd * ((e - prev_e) / (1.0 / 30.0)));
+    double x = (kp * e) + (ki * ie) + (kd * ((e - prev_e) / (1.0 / 30.0)));
+    return x;
   }
 
 private:
