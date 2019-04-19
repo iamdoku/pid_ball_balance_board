@@ -188,10 +188,10 @@ int main() {
 
 
 
-    serialPuts(fd, ss_a.str.c_str);
-    serialPuts(fd, ss_b.str.c_str);
-    serialPuts(fd, ss_c.str.c_str);
-
+    serialPuts(fd, ss_a.str().c_str());
+    serialPuts(fd, ss_b.str().c_str());
+    serialPuts(fd, ss_c.str().c_str());
+    
     ss_a.str(std::string());
     ss_b.str(std::string());
     ss_c.str(std::string());
