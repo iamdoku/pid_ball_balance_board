@@ -33,11 +33,11 @@ double calculateAngle(const cv::Vec2d &v) {
   if (v[0] > 0 && v[1] > 0) {
     return atan(v[1] / v[0]);
   } else if (v[0] < 0 && v[1] > 0) {
-    return atan(v[1] / -v[0]) + (PI / 2);
+    return atan(v[1] / (-1*v[0])) + (PI / 2);
   } else if (v[0] < 0 && v[1] < 0) {
     return atan(v[1] / v[0]) + PI;
   } else if (v[0] > 0 && v[1] < 0) {
-    return atan(-v[1] / v[0]) + ((3 / 2) * PI);
+    return atan((-1*v[1])/ v[0]) + ((3 / 2) * PI);
   } else
     return 0;
 }
