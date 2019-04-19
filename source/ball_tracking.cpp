@@ -1,12 +1,13 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <sstream>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <wiringSerial.h>
+
 
 const double PI = 3.14159265;
 
@@ -161,8 +162,7 @@ int main() {
 
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec) * 180 / PI;
-    double x =
-        180 - std::trunc((regulator.regulate(0, amplitude) * 180) / radius);
+    double x = std::trunc(((regulator.regulate(0, amplitude) * 180) / radius)/2) + 90;
     std::cout << x << std::endl;
     if (angle <= (2 / 3) * PI)
       a_level = x;
@@ -170,18 +170,16 @@ int main() {
       b_level = x;
     else if (angle > (4 / 3) * PI && angle <= 2 * PI)
       c_level = x;
-    
+
     std::stringstream ss_a, ss_b, ss_c;
     ss_a << "a" << a_level;
     ss_b << "b" << b_level;
     ss_c << "c" << c_level;
 
-
-
     serialPuts(fd, ss_a.str().c_str());
     serialPuts(fd, ss_b.str().c_str());
     serialPuts(fd, ss_c.str().c_str());
-    
+
     ss_a.str(std::string());
     ss_b.str(std::string());
     ss_c.str(std::string());
