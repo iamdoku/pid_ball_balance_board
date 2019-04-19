@@ -16,7 +16,7 @@ public:
   PID(double p, double i, double d) : kp(p), ki(i), kd(d) {}
 
   double calculateError(const double &w, const double &y) {
-    e = y - w;
+    e = w - y;
     return e;
   }
 
@@ -24,7 +24,7 @@ public:
     double prev_e = e;
     calculateError(w, y);
     ie += e * (1.0 / 30.0);
-    double x = (kp * e) + (ki * ie) + (kd * ((e - prev_e) / (1.0 / 30.0)));
+    double x = (kp * e); //(ki * ie) + (kd * ((e - prev_e) / (1.0 / 30.0)));
     return x;
   }
 
