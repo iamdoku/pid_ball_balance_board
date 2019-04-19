@@ -73,7 +73,7 @@ int main() {
 
   serialPuts(fd, "a90");
   serialPuts(fd, "b90");
-  erialPuts(fd, "c90");
+  serialPuts(fd, "c90");
   cv::VideoCapture camera(0);
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
