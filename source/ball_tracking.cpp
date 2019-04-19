@@ -95,7 +95,7 @@ int main(){
     cv::flip(frame_bgr, frame_bgr, 0);
 
     frame_filtered_ball = ball.filter(frame_bgr);
-    frame_filtered_board = ball.filter(frame_bgr);
+    frame_filtered_board = board.filter(frame_bgr);
 
 
     cv::Moments m_ball = cv::moments(frame_filtered_ball, true);
