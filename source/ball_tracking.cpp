@@ -114,7 +114,11 @@ int main(){
     cv::Point2d diff = center_ball - center_board;
     cv::Vec2d ball_vec(diff);
 
-    std::cout << ball_vec << std::endl;
+    cv::Mat magnitude;
+    cv::Mat angle;
+    cv::cartToPolar(ball_vec[0], ball_vec[1], magnitude, angle);
+
+    std::cout << magnitude.t()  << " " << angle.t() << std::endl;
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
