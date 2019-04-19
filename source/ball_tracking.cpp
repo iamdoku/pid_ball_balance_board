@@ -131,9 +131,16 @@ int main() {
   serialPuts(fd, "a90");
   serialPuts(fd, "b90");
   serialPuts(fd, "c90");
+
+  int a_level = 90, b_level = 90, c_level = 90;
+
   cv::VideoCapture camera(0);
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+
+  PID regulator(1, 0, 0);
+
+  double x;
 
   FilterHSV ball(0, 83, 177, 30, 255, 255, camera);
   FilterHSV board(0, 0, 130, 255, 255, 255, camera);
@@ -165,7 +172,17 @@ int main() {
     double angle = calculateAngle(ball_vec) * 180 / PI;
 
     std::cout << (amplitude / radius) * 100 << " " << angle << std::endl;
+    double x =
+        180 - std::trunc((regulator.regulate(0, amplitude) * 180) / radius);
 
+    if (angle <= (2 / 3) * PI)
+      a_level = x;
+    else if (angle > (2 / 3) * PI && angle <= (4 / 3) * PI)
+      b_level = x;
+    else if (angle > (4 / 3) * PI && angle <= 2 * PI)
+      c_level = x;
+
+    
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
