@@ -166,14 +166,14 @@ int main() {
 
     std::cout << x << std::endl;
 
-    if (angle <= (2 / 3) * PI)
+    if (angle <= (2 / 3) * PI){
       a_level = x;
+      std::cout << "set a level" << std::endl;
+    }
     else if (angle > (2 / 3) * PI && angle <= (4 / 3) * PI)
       b_level = x;
-    else if (angle > (4 / 3) * PI && angle <= 2 * PI){
+    else if (angle > (4 / 3) * PI && angle <= 2 * PI)
         c_level = x;
-        std::cout << "set c level" << std::endl;
-    }
     
     std::stringstream ss_a, ss_b, ss_c;
     ss_a << "a" << a_level;
