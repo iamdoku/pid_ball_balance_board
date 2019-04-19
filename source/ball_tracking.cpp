@@ -69,6 +69,10 @@ public:
     return cv::Point2d(m.m10 / m.m00, m.m01 / m.m00);
   }
 
+  double getRadius(){
+    return sqrt(cv::contourArea(filter())/PI);
+  }
+
 private:
   cv::VideoCapture &vc;
   int low_H = 0, high_H = 255;
@@ -95,8 +99,9 @@ int main(){
   ball.calibrate(camera);
   board.calibrate(camera);
 
-  cv::Point2d center_board = board.getCenter();
 
+  cv::Point2d center_board = board.getCenter();
+  double radius = board.getRadius();
 
   cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
@@ -120,7 +125,7 @@ int main(){
     double amplitude = sqrt(pow(ball_vec[0],2)+pow(ball_vec[1],2));
     double angle = std::atan(ball_vec[1]/ball_vec[0]) * 180/PI;
 
-    std::cout << amplitude << " " << angle << std::endl;
+    std::cout << (amplitude/radius)*100 << " " << angle << std::endl;
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
