@@ -61,9 +61,9 @@ public:
     return hsv_frame;
   }
 
-  cv::Point getCenter(){
+  cv::Point2d getCenter(){
     cv::Moments m = cv::moments(filter(), true);
-    return cv::Point(m.m10 / m.m00, m.m01 / m.m00);
+    return cv::Point2d(m.m10 / m.m00, m.m01 / m.m00);
   }
 
 private:
@@ -92,7 +92,8 @@ int main(){
   ball.calibrate(camera);
   board.calibrate(camera);
 
-  cv::Point center_board = board.getCenter();
+  cv::Point2d center_board = board.getCenter();
+
 
   cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
@@ -108,7 +109,12 @@ int main(){
 
     cv::Moments m_ball = cv::moments(frame_filtered_ball, true);
 
-    cv::Point center_ball(m_ball.m10 / m_ball.m00, m_ball.m01 / m_ball.m00);
+    cv::Point2d center_ball(m_ball.m10 / m_ball.m00, m_ball.m01 / m_ball.m00);
+
+    cv::Point2d diff = center_ball - center_board;
+    cv::Vec2d ball_vec(diff);
+
+    std::cout << ball_vec << std::endl;
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
