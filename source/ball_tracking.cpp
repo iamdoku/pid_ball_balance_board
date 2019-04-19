@@ -163,7 +163,7 @@ int main() {
 
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec);
-    int x = (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
+    int x = 180 - (std::trunc(((2 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
 
     std::cout << x << std::endl;
 
