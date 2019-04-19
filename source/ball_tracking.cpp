@@ -3,6 +3,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <stdexcept>
+#include <wiringSerial.h>
 
 class FilterHSV {
 public:
@@ -66,6 +67,9 @@ private:
 };
 
 int main() {
+  int fd = serialOpen("/dev/ttyUSB0", 9600);
+  if (fd < 0)
+    return -1;
   cv::VideoCapture camera(0);
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
   camera.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
@@ -74,6 +78,9 @@ int main() {
   std::vector<cv::Vec3f> vec;
   cv::Mat frame_bgr, frame_filtered, threshold;
   while (cv::waitKey(1) == -1) {
+    serialPuts(fd, "a90");
+    serialPuts(fd, "b90");
+    serialPuts(fd, "c90");
     camera >> frame_bgr;
     cv::flip(frame_bgr, frame_bgr, 0);
     frame_filtered = ball.filter(frame_bgr);
