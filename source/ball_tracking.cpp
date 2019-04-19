@@ -1,6 +1,8 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <stdexcept>
@@ -153,9 +155,6 @@ int main() {
 
   cv::Mat frame_bgr, frame_filtered_ball, frame_filtered_board, threshold;
   while (cv::waitKey(1) == -1) {
-    serialPuts(fd, "a90");
-    serialPuts(fd, "b90");
-    serialPuts(fd, "c90");
     camera >> frame_bgr;
 
     frame_filtered_ball = ball.filter(frame_bgr);
@@ -181,8 +180,22 @@ int main() {
       b_level = x;
     else if (angle > (4 / 3) * PI && angle <= 2 * PI)
       c_level = x;
-
     
+    std::stringstream ss_a, ss_b, ss_c;
+    ss_a << "a" << a_level;
+    ss_b << "b" << b_level;
+    ss_c << "c" << c_level;
+
+
+
+    serialPuts(fd, ss_a.str.c_str);
+    serialPuts(fd, ss_b.str.c_str);
+    serialPuts(fd, ss_c.str.c_str);
+
+    ss_a.str(std::string());
+    ss_b.str(std::string());
+    ss_c.str(std::string());
+
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
