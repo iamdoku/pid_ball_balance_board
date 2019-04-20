@@ -165,7 +165,7 @@ int main() {
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec);
     //int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
-    int x = (std::trunc(((regulator.regulate(0, amplitude) * 90) / radius))+90);
+    int x = std::trunc(regulator.regulate(0, amplitude) * 500 / radius)+1500;
 
     std::cout << x << std::endl;
 
@@ -189,9 +189,16 @@ int main() {
     ss_b.str(std::string());
     ss_c.str(std::string());
 
+    cv::Point2d alpha(radius*std::cos(PI*2.0/3.0),radius*std::sin(PI*2.0/3.0));
+    cv::Point2d beta(radius*std::cos(PI*4.0/3.0), radius*std::sin(PI*4.0/3.0));
+    cv::Point2d omega(radius*std::cos(PI*2), radius*std::sin(PI*2));
+
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
-    cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
+    //cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
+    cv::line(frame_bgr, center_board, alpha, cv::Scalar(0, 0, 255), 3);
+    cv::line(frame_bgr, center_board, beta, cv::Scalar(0, 255, 000), 3);
+    cv::line(frame_bgr, center_board, omega, cv::Scalar(255, 0, 0), 3);
 
     cv::imshow("Ball", frame_bgr);
   }
