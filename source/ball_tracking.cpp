@@ -193,7 +193,7 @@ int main() {
     cv::Point2d beta(radius*std::cos(PI*4.0/3.0), radius*std::sin(PI*4.0/3.0));
     cv::Point2d omega(radius*std::cos(PI*2), radius*std::sin(PI*2));
 
-    std::cout << alpha << " " << beta << " " << gamma << std::endl;
+    std::cout << radius << alpha << " " << beta << " " << gamma << std::endl;
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
