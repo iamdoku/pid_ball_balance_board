@@ -125,11 +125,11 @@ int main() {
   if (fd < 0)
     return -1;
 
-  serialPuts(fd, "a120");
-  serialPuts(fd, "b120");
-  serialPuts(fd, "c120");
+  serialPuts(fd, "a1750");
+  serialPuts(fd, "b1750");
+  serialPuts(fd, "c1750");
 
-  int a_level = 120, b_level = 120, c_level = 120;
+  int a_level = 1750, b_level = 1750, c_level = 1750;
 
   cv::VideoCapture camera(0);
   camera.set(cv::CAP_PROP_FRAME_WIDTH, 640);
