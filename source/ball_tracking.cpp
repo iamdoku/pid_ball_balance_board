@@ -189,9 +189,13 @@ int main() {
     ss_b.str(std::string());
     ss_c.str(std::string());
 
-    cv::Point2d alpha(radius*std::cos(PI*2.0/3.0),radius*std::sin(PI*2.0/3.0));
+    /*cv::Point2d alpha(radius*std::cos(PI*2.0/3.0),radius*std::sin(PI*2.0/3.0));
     cv::Point2d beta(radius*std::cos(PI*4.0/3.0), radius*std::sin(PI*4.0/3.0));
-    cv::Point2d omega(radius*std::cos(PI*2), radius*std::sin(PI*2));
+    cv::Point2d omega(radius*std::cos(PI*2), radius*std::sin(PI*2));*/
+
+    cv::Point2d alpha(radius*std::sin(PI*2.0/3.0),radius*std::cos(PI*2.0/3.0));
+    cv::Point2d beta(radius*std::sin(PI*4.0/3.0), radius*std::cos(PI*4.0/3.0));
+    cv::Point2d omega(radius*std::sin(PI*2), radius*std::cos(PI*2));
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
