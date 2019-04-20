@@ -167,16 +167,22 @@ int main() {
     double amplitude = sqrt(pow(ball_vec[0], 2) + pow(ball_vec[1], 2));
     double angle = calculateAngle(ball_vec);
     //int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
-    int x = 2000 + std::trunc(2 * regulator.regulate(0, amplitude) * 500 / radius);
+    int x = 2000 + std::trunc(1 * regulator.regulate(0, amplitude) * 500 / radius);
     std::cout << x << std::endl;
     //std::cout << x << std::endl;
 
-    if (angle <= (2.0 / 3.0) * PI)
+    if (angle <= (2.0 / 3.0) * PI){
       a_level = x;
-    else if (angle > (2.0 / 3.0) * PI && angle <= (4.0 / 3.0) * PI)
-      b_level = x;
-    else if (angle > (4.0 / 3.0) * PI && angle <= 2 * PI)
       c_level = x;
+    }
+    else if (angle > (2.0 / 3.0) * PI && angle <= (4.0 / 3.0) * PI){
+      a_level = x;
+      b_level = x;
+    }
+    else if (angle > (4.0 / 3.0) * PI && angle <= 2 * PI){
+      b_level = x;
+      c_level = x;
+    }
 
     std::stringstream ss_a, ss_b, ss_c;
     ss_a << "a" << a_level;
