@@ -126,9 +126,9 @@ int main() {
   if (fd < 0)
     return -1;
 
-  serialPuts(fd, "a1750");
-  serialPuts(fd, "b1750");
-  serialPuts(fd, "c1750");
+  serialPuts(fd, "a1500");
+  serialPuts(fd, "b1500");
+  serialPuts(fd, "c1500");
 
   int a_level = 1750, b_level = 1750, c_level = 1750;
 
@@ -168,7 +168,7 @@ int main() {
     double angle = calculateAngle(ball_vec);
     //int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
     int x = std::trunc(regulator.regulate(0, amplitude) * 500 / radius)+1500;
-
+    std::cout << x << std::endl;
     //std::cout << x << std::endl;
 
     if (angle <= (2.0 / 3.0) * PI)
@@ -200,7 +200,6 @@ int main() {
     gamma = gamma + center_board;
 
 
-    std::cout << radius << alpha << " " << beta << " " << gamma << std::endl;
 
     cv::circle(frame_bgr, center_ball, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
     cv::circle(frame_bgr, center_board, 3, cv::Scalar(0, 255, 0), -1, 8, 0);
