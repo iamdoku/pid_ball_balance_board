@@ -191,7 +191,12 @@ int main() {
 
     cv::Point2d alpha(radius*std::cos(PI*2.0/3.0),radius*std::sin(PI*2.0/3.0));
     cv::Point2d beta(radius*std::cos(PI*4.0/3.0), radius*std::sin(PI*4.0/3.0));
-    cv::Point2d omega(radius*std::cos(PI*2), radius*std::sin(PI*2));
+    cv::Point2d gamma(radius*std::cos(PI*2), radius*std::sin(PI*2));
+
+    alpha = alpha + center_board;
+    beta = beta + center_board;
+    gamma = gamma + center_board;
+
 
     std::cout << radius << alpha << " " << beta << " " << gamma << std::endl;
 
@@ -200,7 +205,7 @@ int main() {
     //cv::line(frame_bgr, center_ball, center_board, cv::Scalar(0, 0, 255), 3);
     cv::line(frame_bgr, center_board, alpha, cv::Scalar(0, 0, 255), 3);
     cv::line(frame_bgr, center_board, beta, cv::Scalar(0, 255, 000), 3);
-    cv::line(frame_bgr, center_board, omega, cv::Scalar(255, 0, 0), 3);
+    cv::line(frame_bgr, center_board, gamma, cv::Scalar(255, 0, 0), 3);
 
     cv::imshow("Ball", frame_bgr);
   }
