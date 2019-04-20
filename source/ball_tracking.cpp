@@ -168,7 +168,7 @@ int main() {
     double angle = calculateAngle(ball_vec);
     //int x = 180 - (std::trunc(((1 * regulator.calculateError(0, amplitude) * 90) / radius))+90);
     int x1 = std::trunc(3*regulator.regulate(0, amplitude) * 500 / radius);
-    int x2 = std::trunc((1.0/3.0)*regulator.regulate(0, amplitude) * 500 / radius);
+    int x2 = std::trunc(1.5*regulator.regulate(0, amplitude) * 500 / radius);
     std::cout << x << std::endl;
     //std::cout << x << std::endl;
 
