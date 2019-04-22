@@ -35,7 +35,6 @@ private:
 
 double calculateAngle(const cv::Vec2d &v) {
   if (v[0] > 0 && v[1] > 0) {
-    std::cout << "I" << std::endl;
     return atan(v[1] / v[0]);
   } else if (v[0] < 0 && v[1] > 0) {
     return PI - atan(v[1] / (-1 * v[0]));
