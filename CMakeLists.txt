@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 project( ball_tracking )
 find_package( OpenCV REQUIRED )
 find_library(wiringPi_LIB wiringPi)
-include_directories( cv PUBLIC $<BUILD_INTERFACE:${OpenCV_INCLUDE_DIRS}
+target_include_directories( cv PUBLIC $<BUILD_INTERFACE:${OpenCV_INCLUDE_DIRS}
                      mylib PUBLIC $<BUILD_INTERFACE${include/} )
 add_executable( ball_tracking source/main.cpp source/FilterHSV.cpp source/PID.cpp)
 target_link_libraries( ball_tracking ${wiringPi_LIB} ${OpenCV_LIBS} )
